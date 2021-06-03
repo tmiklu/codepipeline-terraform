@@ -6,6 +6,10 @@ provider "aws" {
 resource "aws_s3_bucket" "s3" {
   bucket = "s3-artifact-repo-test1"
   acl    = "private"
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 module "vls-vpc" {
