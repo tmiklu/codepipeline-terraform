@@ -81,11 +81,32 @@ resource "aws_codepipeline" "vls-lambda-hello-world" {
 
       configuration = {
         ActionMode    = "CHANGE_SET_REPLACE"
-        StackName     = "hello-world"
+        StackName     = "nulls"
         Capabilities  = "CAPABILITY_IAM"
-        ChangeSetName = "hello-world"
+        ChangeSetName = "null"
         TemplatePath  = "build_output::package.yaml"
         RoleArn       = "arn:aws:iam::028960685088:role/CloudFormationServiceRole"
+
+      }
+    }
+  }
+
+  stage {
+    name = "Execute"
+
+    action {
+      name            = "Execute"
+      category        = "Deploy"
+      owner           = "AWS"
+      provider        = "CloudFormation"
+      version         = "1"
+      run_order       = "4"
+      region          = "us-east-1"
+
+      configuration = {
+        ActionMode    = "CHANGE_SET_EXECUTE"
+        StackName     = "null"
+        ChangeSetName = "null"
 
       }
     }
